@@ -7,4 +7,8 @@ use Illuminate\Http\Request;
 class hiController extends Controller
 {
     //
+
+    public function hi(){
+
+    }
 }
