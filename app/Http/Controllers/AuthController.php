@@ -16,7 +16,7 @@ class AuthController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login' , 'register']]);
     }
 
 
@@ -32,8 +32,8 @@ class AuthController extends Controller
     }
 
 
-    public function register(Request $request ){
-
+    public function register(Request $request )
+    {
         $validator = Validator::make($request->all(),
             [
                 'name' => 'required',
@@ -70,18 +70,29 @@ class AuthController extends Controller
 
     }
 
-
-    public function logout()
+    public function delete(Request $request)
     {
-        auth()->logout();
+        $validator = Validator::make($request->all(),
+            [
+                'user_id' => 'required',
+            ]);
+        if ($validator->fails()) {
+            return response()->json(['error'=>$validator->errors()], 401);
+        }
 
-        return response()->json(['message' => 'Successfully logged out']);
-    }
+        $id= $request->user_id;
+        $user = auth()->user();
+        if ($user->is_admin){
+            $user = User::query()->find($id);
+            $user->delete();
+            return \response()->json([
+                'message' => 'user has been deleted'
+                , 'user' => $user->name
+                ], 200);
+        }else{
+            return \response()->json(['message' => 'you have no permission to delete user']);
+        }
 
-
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
     }
 
 
@@ -93,6 +104,4 @@ class AuthController extends Controller
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }
-
-
 }

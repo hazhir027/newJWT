@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class Comment extends Migration
+class CreateDoctorsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,11 @@ class Comment extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('doctors', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->bigInteger('code')->nullable(false);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +27,6 @@ class Comment extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('doctors');
     }
 }

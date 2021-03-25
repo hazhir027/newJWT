@@ -23,10 +23,36 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('login', 'AuthController@login');
 
-Route::post('logout', 'AuthController@logout');
-
-Route::post('refresh', 'AuthController@refresh');
-
-Route::post('me', 'AuthController@me');
+Route::get('me', 'AuthController@me');
 
 Route::post('register' , 'AuthController@register');
+
+Route::post('delete-user' , 'AuthController@delete');
+
+/*-------------------------------------------favorite apis------------------------------------------------------------*/
+
+Route::post('store-favorite' , 'FavoriteController@store');
+
+Route::post('delete-favorite' , 'FavoriteController@delete');
+
+Route::get('get-user-favorites' , 'FavoriteController@get_user_list');
+
+/*-------------------------------------------comment apis-------------------------------------------------------------*/
+
+Route::post('store-comment' , 'CommentController@store');
+
+Route::post('delete-comment' , 'CommentController@delete');
+
+Route::get('get-comments' , 'CommentController@get_comments');
+
+/*------------------------------------------visit apis----------------------------------------------------------------*/
+
+Route::middleware('auth:api')->post('store-visit' , 'VisitController@store');
+
+Route::post('delete-visit' , 'VisitController@delete');
+
+Route::get('get-dr-visits' , 'VisitController@get_visits');
+
+
+
+

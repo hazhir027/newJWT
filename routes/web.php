@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::get('hi' , function (){
+    $doctor = new \App\Doctor();
+    $doctor->code = 12345678910;
+    $doctor->save();
+});
