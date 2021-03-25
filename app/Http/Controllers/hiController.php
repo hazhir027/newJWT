@@ -9,6 +9,6 @@ class hiController extends Controller
     //
 
     public function hi(){
-
+        return;
     }
 }
